@@ -20,26 +20,25 @@ export default function Edit() {
     axios
       .get(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`)
       .then((response) => {
-        const data = response.data.result;
-        setKodeBarang(data.kodeBarang);
-        setNamaBarang(data.namaBarang);
-        setHargaJual(data.hargaJual);
-        setHargaPokok(data.hargaPokok);
-        setKategori(data.kategori.id);
+        setKodeBarang(response.data.result.kode_barang);
+        setNamaBarang(response.data.result.nama_barang);
+        setHargaJual(response.data.result.harga_jual);
+        setHargaPokok(response.data.result.harga_pokok);
+        setKategori(response.data.result.kategori.id);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setError("Data tidak ditemukan");
       });
 
-    // Fetching categories for the dropdown
+    // Fetching categories for the dropdown kategoei
     axios
       .get("https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/kategori")
       .then((response) => {
         setListKategori(response.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching kategori data:", error);
+        console.error("Error fetching Barang data:", error);
       });
   }, [id]);
 

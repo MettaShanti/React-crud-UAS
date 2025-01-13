@@ -65,6 +65,7 @@ export default function CreateStok() {
           kategori_id: kategoriId, // Data kategori yang dipilih
         }
       );
+      
 
       if (response.status === 201) {
         setSuccess("Barang created successfully!");

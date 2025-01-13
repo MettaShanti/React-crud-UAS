@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import axios from "axios"
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2"; // Import SweetAlert2
@@ -6,22 +6,20 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 export default function List(){
     //state barang
     const [barang, setBarang] = useState([]);
+    //useeffect
 
-    //akses api
     useEffect( () => {
-        axios
-        .get("https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang")
-        .then( (response)=> {
-            console.log(response);
-            setBarang(response.data.data)// reault diganti(disesuaikan inspect)
+        axios.get('https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang')
+        .then( response => {
+            console. log(response);
+            setBarang(response.data.data)//disesuaikan dari inspect
         })
-    }, [])
-    
-// Fungsi untuk menghapus barang berdasarkan ID dengan konfirmasi SweetAlert2
-const handleDelete = (id, nama_barang) => {
+    }, [] )
+ // Fungsi untuk menghapus fakultas berdasarkan ID dengan konfirmasi SweetAlert2
+ const handleDelete = (id, nama_barang) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You won't be able to revert this! Barang: ${nama_barang}`,
+      text: `You won't be able to revert this! barang: ${nama_barang}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -33,7 +31,7 @@ const handleDelete = (id, nama_barang) => {
         axios
           .delete(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`)
           .then((response) => {
-            // Hapus barang dari state setelah sukses dihapus dari server
+            // Hapus fakultas dari state setelah sukses dihapus dari server
             setBarang(barang.filter((data) => data.id !== id));
             // Tampilkan notifikasi sukses
             Swal.fire("Deleted!", "Your data has been deleted.", "success");
@@ -49,9 +47,9 @@ const handleDelete = (id, nama_barang) => {
       }
     });
   };
-    return(
+    return (
         <>
-            <h2>List Barang</h2>
+        <h2>List Barang</h2>
             <NavLink to="/barang/create" className="btn btn-primary mb-3">Create</NavLink>
             <table className="table">
                 <thead>
@@ -78,7 +76,7 @@ const handleDelete = (id, nama_barang) => {
                             <button onClick={() => handleDelete(data.id, data.nama_barang)}
                             className="btn btn-danger"> Delete
                             </button>
-                            </td>
+                        </td>  
                         </tr>
                     ) )}
                 </tbody>

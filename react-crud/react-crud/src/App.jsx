@@ -1,5 +1,7 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useState} from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink} from "react-router-dom"
+import ProtectedRoute from "./components/ProtectedRoute"; // ProtectedRoute Component
+import Logout from "./components/Logout";
 
 const Home = React.lazy( () => import("./components/Home"))
 const BarangList = React.lazy( () => import("./components/Barang/List"))
@@ -17,9 +19,10 @@ const StokCreate = React.lazy( () => import("./components/Stok/Create"))
 const StokEdit = React.lazy( () => import("./components/Stok/Edit"))
 
 // login
+const Login = React.lazy(() => import("./components/Login"));
 
 function App() {
- 
+  const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
   return (
     <Router>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -42,27 +45,84 @@ function App() {
         <li className="nav-item">
           <NavLink to="/stok" className="nav-link">Stok</NavLink>
         </li>
+        <li className="nav-item">
+                {token ? (
+                  <NavLink className="nav-link px-3" to="/logout">
+                    Logout
+                  </NavLink>
+                ) : (
+                  <NavLink className="nav-link px-3" to="/login">
+                    Login
+                  </NavLink>
+                )}
+          </li>
       </ul>
     </div>
   </div>
 </nav>
-      <h1>React CRUD</h1>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/barang' element={<BarangList/>}/>
-        <Route path='/barang/create' element={<BarangCreate/>}/>
-        <Route path='/barang/edit/:id' element={<BarangEdit/>}/>
 
-        <Route path='/kategori' element={<KategoriList/>}/>
-        <Route path='/kategori/create' element={<KategoriCreate/>}/>
-        <Route path='/kategori/edit/:id' element={<KategoriEdit/>}/>
+        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/logout" element={<Logout />} />
 
-        <Route path='/stok' element={<StokList/>}/>
-        <Route path='/stok/create' element={<StokCreate/>}/>
-        <Route path='/stok/edit/:id' element={<StokEdit/>}/>
+        <Route path='/barang' element={
+          <ProtectedRoute>
+          <BarangList/>
+        </ProtectedRoute>
+        }/>
+        <Route path='/barang/create' 
+        element={
+          <ProtectedRoute>
+            <BarangCreate/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/barang/edit/:id' 
+        element={
+          <ProtectedRoute>
+            <BarangEdit/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path='/kategori' 
+        element={
+          <ProtectedRoute>
+            <KategoriList/>
+          </ProtectedRoute>
+        }/>
+
+        <Route path='/kategori/create' 
+        element={
+          <ProtectedRoute>
+            <KategoriCreate/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/kategori/edit/:id' 
+        element={<ProtectedRoute>
+          <KategoriEdit/>
+        </ProtectedRoute>
+      }/>
+
+        <Route path='/stok' element={
+          <ProtectedRoute>
+          <StokList/>
+        </ProtectedRoute>
+        }/>
+        <Route path='/stok/create'
+         element={
+          <ProtectedRoute>
+            <StokCreate/>
+          </ProtectedRoute>
+         }/>
+        <Route path='/stok/edit/:id' 
+        element={
+          <ProtectedRoute>
+            <StokEdit/>
+          </ProtectedRoute>
+        }/>
       </Routes>
     </Router>
-  )
+  );
 }
 
 export default App
