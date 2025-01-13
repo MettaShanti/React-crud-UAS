@@ -21,8 +21,8 @@ export default function Edit() {
       .get(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/stok/${id}`)
       .then((response) => {
         setJumlah(response.data.result.jumlah); // Menyimpan nama prodi ke dalam state 'nama'
-        setTglMasuk(response.data.result.tglMasuk);
-        setTgalExpired(response.data.result.tglExpired);
+        setTglMasuk(response.data.result.tgl_masuk);
+        setTgalExpired(response.data.result.tgl_expired);
         setKeterangan(response.data.result.keterangan);
         setBarang(response.data.result.barang.id); // Menyimpan ID fakultas ke dalam state 'fakultas'
       })

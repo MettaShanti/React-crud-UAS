@@ -24,7 +24,7 @@ export default function Edit() {
         setNamaBarang(response.data.result.nama_barang);
         setHargaJual(response.data.result.harga_jual);
         setHargaPokok(response.data.result.harga_pokok);
-        setKategori(response.data.result.kategori.id);
+        setKategori(response.data.result.kategori_id);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
