@@ -1,6 +1,5 @@
 import React, {Suspense} from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink} from "react-router-dom"
-import Logout from "./components/Logout";
 
 const Home = React.lazy( () => import("./components/Home"))
 const BarangList = React.lazy( () => import("./components/Barang/List"))
@@ -18,9 +17,7 @@ const StokCreate = React.lazy( () => import("./components/Stok/Create"))
 const StokEdit = React.lazy( () => import("./components/Stok/Edit"))
 
 // login
-const Login = React.lazy(() => import("./components/Login"));
-const App = () => {
-  const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
+
 function App() {
  
   return (
@@ -45,17 +42,6 @@ function App() {
         <li className="nav-item">
           <NavLink to="/stok" className="nav-link">Stok</NavLink>
         </li>
-        <li>
-                {token ? ( // Tampilkan Logout jika token ada
-                  <NavLink className="nav-link" to="/logout">
-                    Logout
-                  </NavLink>
-                ) : (
-                  <NavLink className="nav-link" to="/login">
-                    Login
-                  </NavLink>
-                )}
-              </li>
       </ul>
     </div>
   </div>
@@ -63,8 +49,6 @@ function App() {
       <h1>React CRUD</h1>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/logout" element={<Logout />} />
         <Route path='/barang' element={<BarangList/>}/>
         <Route path='/barang/create' element={<BarangCreate/>}/>
         <Route path='/barang/edit/:id' element={<BarangEdit/>}/>
