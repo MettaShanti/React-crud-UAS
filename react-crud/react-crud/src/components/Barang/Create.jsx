@@ -4,12 +4,13 @@ import axios from "axios"; // Import axios untuk melakukan HTTP request
 
 export default function CreateStok() {
   // Inisialisasi state untuk menyimpan nama barang
-  const [kodeBarang, setKodeBarang] = useState("");
-  const [namaBarang, setNamaBarang] = useState("");
-  const [hargaJual, setHargaJual] = useState("");
-  const [hargaPokok, setHargaPokok] = useState("");
-  const [kategoriId, setKategoriId] = useState("");
+  const [kode_barang, setKodeBarang] = useState("");
+  const [nama_barang, setNamaBarang] = useState("");
+  const [harga_jual, setHargaJual] = useState("");
+  const [harga_pokok, setHargaPokok] = useState("");
+  const [kategori, setKategori] = useState("");
   const [listKategori, setListKategori] = useState([]); // Daftar kategori barang
+
   const [error, setError] = useState(""); // Pesan error
   const [success, setSuccess] = useState(""); // Pesan sukses
 
@@ -36,19 +37,19 @@ export default function CreateStok() {
     setSuccess(""); // Reset pesan sukses sebelum proses
 
     // Validasi input
-    if (kodeBarang.trim() === "" || kategoriId.trim() === "") {
+    if (kode_barang.trim() === "" || kategori.trim() === "") {
       setError("Kode Barang and Kategori are required");
       return; // Stop eksekusi fungsi jika input tidak valid
     }
-    if (namaBarang.trim() === "") {
+    if (nama_barang.trim() === "") {
       setError("Nama Barang is required");
       return; // Stop eksekusi fungsi jika input tidak valid
     }
-    if (hargaJual.trim() === "") {
+    if (harga_jual.trim() === "") {
       setError("Harga Jual is required");
       return; // Stop eksekusi fungsi jika input tidak valid
     }
-    if (hargaPokok.trim() === "") {
+    if (harga_pokok.trim() === "") {
       setError("Harga Pokok is required");
       return; // Stop eksekusi fungsi jika input tidak valid
     }
@@ -58,11 +59,11 @@ export default function CreateStok() {
       const response = await axios.post(
         "https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang", // Endpoint API
         {
-          kode_barang: kodeBarang,
-          nama_barang: namaBarang,
-          harga_jual: hargaJual,
-          harga_pokok: hargaPokok,
-          kategori_id: kategoriId, // Data kategori yang dipilih
+          kode_barang: kode_barang,
+          nama_barang: nama_barang,
+          harga_jual: harga_jual,
+          harga_pokok: harga_pokok,
+          kategori_id: kategori, // Data kategori yang dipilih
         }
       );
       
@@ -73,7 +74,7 @@ export default function CreateStok() {
         setNamaBarang("");
         setHargaJual("");
         setHargaPokok("");
-        setKategoriId(""); // Kosongkan dropdown setelah sukses submit
+        setKategori(""); // Kosongkan dropdown setelah sukses submit
       } else {
         setError("Failed to create Barang");
       }
@@ -95,8 +96,8 @@ export default function CreateStok() {
           <input
             type="text"
             className="form-control"
-            id="kodeBarang"
-            value={kodeBarang} // Nilai input disimpan di state kodeBarang
+            id="kode_barang"
+            value={kode_barang} // Nilai input disimpan di state kodeBarang
             onChange={(e) => setKodeBarang(e.target.value)} // Update state saat input berubah
             placeholder="Enter Kode Barang"
           />
@@ -106,8 +107,8 @@ export default function CreateStok() {
           <input
             type="text"
             className="form-control"
-            id="namaBarang"
-            value={namaBarang} // Nilai input disimpan di state namaBarang
+            id="nama_barang"
+            value={nama_barang} // Nilai input disimpan di state namaBarang
             onChange={(e) => setNamaBarang(e.target.value)} // Update state saat input berubah
             placeholder="Enter Nama Barang"
           />
@@ -117,8 +118,8 @@ export default function CreateStok() {
           <input
             type="number"
             className="form-control"
-            id="hargaJual"
-            value={hargaJual} // Nilai input disimpan di state hargaJual
+            id="harga_jual"
+            value={harga_jual} // Nilai input disimpan di state hargaJual
             onChange={(e) => setHargaJual(e.target.value)} // Update state saat input berubah
             placeholder="Enter Harga Jual"
           />
@@ -129,7 +130,7 @@ export default function CreateStok() {
             type="number"
             className="form-control"
             id="hargaPokok"
-            value={hargaPokok} // Nilai input disimpan di state hargaPokok
+            value={harga_pokok} // Nilai input disimpan di state hargaPokok
             onChange={(e) => setHargaPokok(e.target.value)} // Update state saat input berubah
             placeholder="Enter Harga Pokok"
           />
@@ -138,11 +139,11 @@ export default function CreateStok() {
           <label className="form-label">Kategori</label>
           <select
             className="form-select"
-            id="kategoriId"
-            value={kategoriId} // Nilai dropdown disimpan di state kategoriId
-            onChange={(e) => setKategoriId(e.target.value)} // Update state saat pilihan berubah
+            id="kategori"
+            value={kategori} // Nilai dropdown disimpan di state kategori
+            onChange={(e) => setKategori(e.target.value)} // Update state saat pilihan berubah
           >
-            <option value="">Select Kategori</option>
+            <option value="">pilih Kategori</option>
             {listKategori.map((kategori) => (
               <option key={kategori.id} value={kategori.id}>
                 {kategori.nama_kategori}

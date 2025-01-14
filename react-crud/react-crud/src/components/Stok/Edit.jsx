@@ -24,7 +24,7 @@ export default function Edit() {
         setTglMasuk(response.data.result.tgl_masuk);
         setTgalExpired(response.data.result.tgl_expired);
         setKeterangan(response.data.result.keterangan);
-        setBarang(response.data.result.barang.id); // Menyimpan ID fakultas ke dalam state 'fakultas'
+        setBarang(response.data.result.barang_id); // Menyimpan ID fakultas ke dalam state 'fakultas'
       })
       .catch((error) => {
         console.error("Error fetching data:", error); // Menangani error jika request gagal
