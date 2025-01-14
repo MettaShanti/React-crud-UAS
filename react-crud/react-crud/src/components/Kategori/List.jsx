@@ -72,7 +72,7 @@ const handleDelete = (id, nama_ketegori) => {
                         <NavLink to={`/kategori/edit/${data.id}`}
                             className="btn btn-warning">Edit
                         </NavLink>
-                        <button onClick={() => handleDelete(data.id, data.nama_barang)}
+                        <button onClick={() => handleDelete(data.id, data.nama_kategori)}
                             className="btn btn-danger"> Delete
                         </button>
                         </td>

@@ -16,37 +16,37 @@ export default function List(){
         })
     }, [] )
  // Fungsi untuk menghapus fakultas berdasarkan ID dengan konfirmasi SweetAlert2
- const handleDelete = (id, nama_barang) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: `You won't be able to revert this! barang: ${nama_barang}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Lakukan penghapusan jika dikonfirmasi
-        axios
-          .delete(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`)
-          .then((response) => {
-            // Hapus fakultas dari state setelah sukses dihapus dari server
-            setBarang(barang.filter((data) => data.id !== id));
-            // Tampilkan notifikasi sukses
-            Swal.fire("Deleted!", "Your data has been deleted.", "success");
-          })
-          .catch((error) => {
-            console.error("Error deleting data:", error); // Menangani error
-            Swal.fire(
-              "Error",
-              "There was an issue deleting the data.",
-              "error"
-            );
-          });
-      }
-    });
-  };
+const handleDelete = (id, nama_barang) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: `You won't be able to revert this! barang: ${nama_barang}`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Lakukan penghapusan jika dikonfirmasi
+      axios
+        .delete(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`)
+        .then((response) => {
+          // Hapus fakultas dari state setelah sukses dihapus dari server
+          setbarang(barang.filter((data) => data.id !== id));
+          // Tampilkan notifikasi sukses
+          Swal.fire("Deleted!", "Your data has been deleted.", "success");
+        })
+        .catch((error) => {
+          console.error("Error deleting data:", error); // Menangani error
+          Swal.fire(
+            "Error",
+            "There was an issue deleting the data.",
+            "error"
+          );
+        });
+    }
+  });
+};
     return (
         <>
         <h2>List Barang</h2>
@@ -54,8 +54,8 @@ export default function List(){
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Nama Barang</th>
                         <th>Kode Barang</th>
+                        <th>Nama Barang</th>
                         <th>Harga Jual</th>
                         <th>Harga Pokok</th>
                         <th>ID Kategori</th>
@@ -73,8 +73,9 @@ export default function List(){
                             <NavLink to={`/barang/edit/${data.id}`}
                                 className="btn btn-warning">Edit
                             </NavLink>
-                            <button onClick={() => handleDelete(data.id, data.nama_barang)}
-                            className="btn btn-danger"> Delete
+                            <button
+                            onClick={() => handleDelete(data.id, data.nama)}
+                            className="btn btn-danger">Hapus
                             </button>
                         </td>  
                         </tr>

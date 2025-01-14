@@ -61,23 +61,16 @@ export default function Edit() {
   };
   // Menghandle submit form untuk mengedit data prodi
   const handleSubmit = (e) => {
-    e.preventDefault(); // Mencegah reload halaman saat form disubmit
+    e.preventDefault();  // Mencegah reload halaman saat form disubmit
     axios
-  .patch(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`, {
-    kode_barang,
-    nama_barang,
-    harga_jual,
-    harga_pokok,
-    kategori_id: kategori, // Pastikan nama field sesuai dengan yang diterima API
-  })
-  .then((response) => {
-    navigate("/barang"); // Redirect setelah berhasil
-  })
-  .catch((error) => {
-    console.error("Error updating data:", error);
-    setError("Gagal mengupdate data");
-  });
-
+      .put(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`, { kode_barang, nama_barang, harga_jual, harga_pokok, kategori_id : kategori })  // Mengirimkan request PATCH untuk mengupdate data fakultas berdasarkan ID
+      .then((response) => {
+        navigate("/barang");  // Jika update berhasil, navigasi kembali ke halaman list fakultas
+      })
+      .catch((error) => {
+        console.error("Error updating data:", error);  // Menampilkan error di console jika ada kesalahan
+        setError("Gagal mengupdate data");  // Mengubah state 'error' jika terjadi kesalahan dalam proses update
+      });
   };
  
   return (
