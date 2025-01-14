@@ -23,9 +23,10 @@ const Login = React.lazy(() => import("./components/Login"));
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("authToken")); // Ambil token dari localStorage
+
   return (
     <Router>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'black' }}>
   <div className="container-fluid">
     <a className="navbar-brand" href="#">React APP Iventory Barang</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
