@@ -6,18 +6,15 @@ import axios from "axios"; // Import axios untuk melakukan HTTP request
 export default function CreateStok() {
   // Inisialisasi state untuk menyimpan nama prodi
   const [jumlah, setJumlah] = useState("");
-  // Inisialisasi state untuk menyimpan ID fakultas yang dipilih
-  const [tglMasuk, setTglMasuk] = useState("");
-  const [tglExpired, setTglExpired] = useState("");
+  const [tgl_masuk, setTglMasuk] = useState("");
+  const [tgl_expired, setTglExpired] = useState("");
   const [keterangan, setKeterangan] = useState("");
-  const [barangId, setBarangId] = useState("");
-  // Inisialisasi state untuk menyimpan daftar fakultas
+  const [barang, setBarang] = useState("");
   const [ListBarang, setListBarang] = useState([]);
   // Inisialisasi state untuk menyimpan pesan error
   const [error, setError] = useState("");
   // Inisialisasi state untuk menyimpan pesan sukses
   const [success, setSuccess] = useState("");
-
   // Mengambil daftar fakultas dari API saat komponen dimuat
   useEffect(() => {
     const fetchBarang = async () => {
@@ -41,15 +38,15 @@ export default function CreateStok() {
     setSuccess(""); // Reset pesan sukses sebelum proses
 
     // Validasi input: jika namaProdi atau fakultasId kosong, set pesan error
-    if (jumlah.trim() === "" || barangId.trim() === "") {
+    if (jumlah.trim() === "" || barang.trim() === "") {
       setError("Jumlah and Id Barang are required"); // Set pesan error jika input kosong
       return; // Stop eksekusi fungsi jika input tidak valid
     }
-    if (tglMasuk.trim() === "") {
+    if (tgl_masuk.trim() === "") {
       setError("Tanggal Masuk are required"); // Set pesan error jika input kosong
       return; // Stop eksekusi fungsi jika input tidak valid
     }
-    if (tglExpired.trim() === "") {
+    if (tgl_expired.trim() === "") {
       setError("Tanggal Expired are required"); // Set pesan error jika input kosong
       return; // Stop eksekusi fungsi jika input tidak valid
     }
@@ -64,10 +61,10 @@ export default function CreateStok() {
         "https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/stok", // Endpoint API yang dituju
         {
           jumlah: jumlah, // Data nama prodi
-          tgl_masuk: tglMasuk,
-          tgl_expired: tglExpired,
+          tgl_masuk: tgl_masuk,
+          tgl_expired: tgl_expired,
           keterangan: keterangan,
-          barang_id: barangId // Data ID fakultas yang dipilih
+          barang_id: barang // Data ID fakultas yang dipilih
         }
       );
 
@@ -79,7 +76,7 @@ export default function CreateStok() {
         setTglMasuk("");
         setTglExpired("");
         setKeterangan("");
-        setBarangId(""); // Kosongkan dropdown setelah sukses submit
+        setBarang(""); // Kosongkan dropdown setelah sukses submit
       } else {
         // Jika tidak berhasil, tampilkan pesan error
         setError("Failed to create Stok");
@@ -118,8 +115,8 @@ export default function CreateStok() {
           <input
             type="date"
             className="form-control"
-            id="tglMasuk"
-            value={tglMasuk} // Nilai input disimpan di state namaProdi
+            id="tgl_masuk"
+            value={tgl_masuk} // Nilai input disimpan di state namaProdi
             onChange={(e) => setTglMasuk(e.target.value)} // Update state saat input berubah
             placeholder="Enter Tanggal Masuk" // Placeholder teks untuk input
           />
@@ -130,8 +127,8 @@ export default function CreateStok() {
           <input
             type="date"
             className="form-control"
-            id="tglExpired"
-            value={tglExpired} // Nilai input disimpan di state namaProdi
+            id="tgl_expired"
+            value={tgl_expired} // Nilai input disimpan di state namaProdi
             onChange={(e) => setTglExpired(e.target.value)} // Update state saat input berubah
             placeholder="Enter Tanggal Masuk" // Placeholder teks untuk input
           />
@@ -153,9 +150,9 @@ export default function CreateStok() {
           {/* Dropdown untuk memilih fakultas */}
           <select
             className="form-select"
-            id="barangId"
-            value={barangId} // Nilai dropdown disimpan di state fakultasId
-            onChange={(e) => setBarangId(e.target.value)} // Update state saat pilihan berubah
+            id="barang"
+            value={barang} // Nilai dropdown disimpan di state fakultasId
+            onChange={(e) => setBarang(e.target.value)} // Update state saat pilihan berubah
           >
             <option value="">Select Barang</option>
             {ListBarang.map((barang) => (

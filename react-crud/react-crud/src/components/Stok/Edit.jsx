@@ -6,12 +6,12 @@ import axios from "axios"; // Mengimpor axios untuk melakukan request HTTP
 export default function Edit() {
   const { id } = useParams(); // Mengambil parameter "id" dari URL menggunakan useParams
   const navigate = useNavigate(); // Menggunakan useNavigate untuk navigasi setelah proses selesai
-  const [jumlah, setJumlah] = useState(""); // Menginisialisasi state 'nama' untuk menyimpan nama prodi
-  const [tglMasuk, setTglMasuk] = useState("");
-  const [tglExpired, setTgalExpired] = useState("");
+  const [jumlah, setJumlah] = useState("");
+  const [tgl_masuk, setTglMasuk] = useState("");
+  const [tgl_expired, setTglExpired] = useState("");
   const [keterangan, setKeterangan] = useState("");
-  const [barang, setBarang] = useState(""); // Menginisialisasi state 'fakultas' untuk menyimpan ID fakultas terpilih
-  const [listBarang, setListBarang] = useState([]); // Menginisialisasi state 'listFakultas' untuk menyimpan daftar fakultas dari API
+  const [barang, setBarang] = useState("");
+  const [ListBarang, setListBarang] = useState([]);
   const [error, setError] = useState(null); // Menginisialisasi state 'error' untuk menyimpan pesan error jika ada
 
   // Mengambil data prodi berdasarkan id ketika komponen pertama kali dimuat
@@ -22,7 +22,7 @@ export default function Edit() {
       .then((response) => {
         setJumlah(response.data.result.jumlah); // Menyimpan nama prodi ke dalam state 'nama'
         setTglMasuk(response.data.result.tgl_masuk);
-        setTgalExpired(response.data.result.tgl_expired);
+        setTglExpired(response.data.result.tgl_expired);
         setKeterangan(response.data.result.keterangan);
         setBarang(response.data.result.barang_id); // Menyimpan ID fakultas ke dalam state 'fakultas'
       })
@@ -31,14 +31,14 @@ export default function Edit() {
         setError("Data tidak ditemukan"); // Menampilkan pesan error jika data tidak ditemukan
       });
 
-    // Mengambil data barang untuk dropdown
+    // Mengambil data fakultas untuk dropdown
     axios
-      .get("https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang") // Request ke API barang
+      .get("https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang") // Request ke API fakultas
       .then((response) => {
-        setListBarang(response.data.data); // Menyimpan daftar fakultas ke dalam state 'listFakultas'// resut
+        setListBarang(response.data.data); // Menyimpan daftar fakultas ke dalam state 'listFakultas'
       })
       .catch((error) => {
-        console.error("Error fetching barang data:", error); // Menangani error jika request gagal
+        console.error("Error fetching stok data:", error); // Menangani error jika request gagal
       });
   }, [id]); // useEffect akan dijalankan ulang setiap kali 'id' berubah
 
@@ -50,7 +50,7 @@ export default function Edit() {
     setTglMasuk(e.target.value); // Mengubah state 'nama' sesuai dengan nilai input yang diisi pengguna
   };
   const handleChangeTglExpired = (e) => {
-    setTgalExpired(e.target.value); // Mengubah state 'nama' sesuai dengan nilai input yang diisi pengguna
+    setTglExpired(e.target.value); // Mengubah state 'nama' sesuai dengan nilai input yang diisi pengguna
   };
   const handleChangeKeterangan = (e) => {
     setKeterangan(e.target.value); // Mengubah state 'nama' sesuai dengan nilai input yang diisi pengguna
@@ -59,21 +59,20 @@ export default function Edit() {
   const handleBarangChange = (e) => {
     setBarang(e.target.value); // Mengubah state 'fakultas' sesuai dengan pilihan yang dipilih pengguna di dropdown
   };
-
   // Menghandle submit form untuk mengedit data prodi
   const handleSubmit = (e) => {
-    e.preventDefault(); // Mencegah reload halaman saat form disubmit
+    e.preventDefault();  // Mencegah reload halaman saat form disubmit
     axios
-      .patch(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/stok/${id}`, {jumlah, tgl_masuk, tgl_expired, barang_id: barang}) // Mengirimkan request PATCH untuk mengupdate data prodi berdasarkan ID
+      .put(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/stok/${id}`, { jumlah, tgl_masuk, tgl_expired, keterangan, barang_id : barang })  // Mengirimkan request PATCH untuk mengupdate data fakultas berdasarkan ID
       .then((response) => {
-        navigate("/stok"); // Jika update berhasil, navigasi kembali ke halaman list prodi
+        navigate("/stok");  // Jika update berhasil, navigasi kembali ke halaman list fakultas
       })
       .catch((error) => {
-        console.error("Error updating data:", error); // Menampilkan error di console jika ada kesalahan
-        setError("Gagal mengupdate data"); // Mengubah state 'error' jika terjadi kesalahan dalam proses update
+        console.error("Error updating data:", error);  // Menampilkan error di console jika ada kesalahan
+        setError("Gagal mengupdate data");  // Mengubah state 'error' jika terjadi kesalahan dalam proses update
       });
   };
-
+ 
   return (
     <div>
       <h2>Edit Stok</h2> {/* Menampilkan judul halaman */}
@@ -91,27 +90,27 @@ export default function Edit() {
         </div>
         <div className="mb-3">
           <label htmlFor="tgl_masuk" className="form-label">
-            Tanggal Masuk
+          Tanggal Masuk
           </label> {/* Label untuk input nama prodi */}
           <input
-            type="date" className="form-control" id="tgl_masuk" value={tglMasuk} // Mengisi nilai input dengan state 'nama'
+            type="date" className="form-control" id="tgl_masuk" value={tgl_masuk} // Mengisi nilai input dengan state 'nama'
             onChange={handleChangeTglMasuk} // Mengubah nilai input saat ada perubahan (user mengetik)
             required // Input wajib diisi
           />
         </div>
         <div className="mb-3">
           <label htmlFor="tgl_expired" className="form-label">
-            Tanggal Expired
+          Tanggal Expired
           </label> {/* Label untuk input nama prodi */}
           <input
-            type="date" className="form-control" id="tgl_expired" value={tglExpired} // Mengisi nilai input dengan state 'nama'
+            type="date" className="form-control" id="tgl_expired" value={tgl_expired} // Mengisi nilai input dengan state 'nama'
             onChange={handleChangeTglExpired} // Mengubah nilai input saat ada perubahan (user mengetik)
             required // Input wajib diisi
           />
         </div>
         <div className="mb-3">
           <label htmlFor="keterangan" className="form-label">
-            Keterangan
+          Keterangan
           </label> {/* Label untuk input nama prodi */}
           <input
             type="text" className="form-control" id="keterangan" value={keterangan} // Mengisi nilai input dengan state 'nama'
@@ -119,21 +118,21 @@ export default function Edit() {
             required // Input wajib diisi
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-3 ms-3">
           <label htmlFor="barang" className="form-label">
-            Nama Barang
-          </label> {/* Label untuk dropdown fakultas */}
+            Barang
+          </label> {/* Label untuk dropdown dokter */}
           <select
-            className="form-select" id="barang" value={barang} // Mengisi nilai dropdown dengan state 'fakultas'
-            onChange={handleBarangChange} // Mengubah nilai dropdown saat pengguna memilih fakultas
+            className="form-select" id="barang" value={barang} // Mengisi nilai dropdown dengan state 'dokter'
+            onChange={handleBarangChange} // Mengubah nilai dropdown saat pengguna memilih dokter
             required // Dropdown wajib dipilih
           >
-            <option value="">Pilih Barang</option> {/* Default option untuk dropdown */}
-            {listBarang.map(
-              // Melakukan mapping dari daftar fakultas untuk menampilkan setiap fakultas sebagai opsi
+            <option value="">Pilih barang</option> {/* Default option untuk dropdown */}
+            {ListBarang.map(
+              // Melakukan mapping dari daftar dokter untuk menampilkan setiap dokter sebagai opsi
               (data) => (
                 <option key={data.id} value={data.id}>
-                  {data.nama_barang} {/* Menampilkan nama fakultas */}
+                  {data.nama_barang} {/* Menampilkan nama dokter */}
                 </option>
               )
             )}

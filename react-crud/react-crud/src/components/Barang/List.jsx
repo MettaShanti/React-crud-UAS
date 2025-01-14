@@ -16,10 +16,10 @@ export default function List(){
         })
     }, [] )
  // Fungsi untuk menghapus fakultas berdasarkan ID dengan konfirmasi SweetAlert2
-const handleDelete = (id, nama_barang) => {
+const handleDelete = (id, kode_barang) => {
   Swal.fire({
     title: "Are you sure?",
-    text: `You won't be able to revert this! barang: ${nama_barang}`,
+    text: `You won't be able to revert this! barang: ${kode_barang}`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -32,7 +32,7 @@ const handleDelete = (id, nama_barang) => {
         .delete(`https://uas-web-2-git-main-metta-shantis-projects.vercel.app/api/api/barang/${id}`)
         .then((response) => {
           // Hapus fakultas dari state setelah sukses dihapus dari server
-          setbarang(barang.filter((data) => data.id !== id));
+          setBarang(barang.filter((data) => data.id !== id));
           // Tampilkan notifikasi sukses
           Swal.fire("Deleted!", "Your data has been deleted.", "success");
         })
@@ -74,7 +74,7 @@ const handleDelete = (id, nama_barang) => {
                                 className="btn btn-warning">Edit
                             </NavLink>
                             <button
-                            onClick={() => handleDelete(data.id, data.nama)}
+                            onClick={() => handleDelete(data.id, data.kode_barang)}
                             className="btn btn-danger">Hapus
                             </button>
                         </td>  
