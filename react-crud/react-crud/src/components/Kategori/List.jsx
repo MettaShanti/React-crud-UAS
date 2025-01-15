@@ -59,6 +59,7 @@ const handleDelete = (id, nama_ketegori) => {
                     <th>Jenis</th>
                     <th>Deskripsi</th>
                     <th>Status</th>
+                    <th></th>
                     </tr>
                 </thead>
                 <tbody>

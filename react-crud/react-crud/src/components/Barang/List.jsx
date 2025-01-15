@@ -59,6 +59,7 @@ const handleDelete = (id, kode_barang) => {
                         <th>Harga Jual</th>
                         <th>Harga Pokok</th>
                         <th>ID Kategori</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
