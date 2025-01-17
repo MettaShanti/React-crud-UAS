@@ -63,7 +63,7 @@ export default function List() {
             <th>Tanggal Expired</th>
             <th>Keterangan</th>
             <th>Nama Barang</th>
-            <th>Actions</th> {/* Add column for actions */}
+            <th></th>
           </tr>
         </thead>
         <tbody>
